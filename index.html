@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>Paperback Writer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+
+
+<!-- Link your external style - CSS file here -->
+<link rel="stylesheet" href="styles/style.css">
+
+<!-- Link your external JS file here -->
+<script src="scripts/Paperback-Writer.js" defer></script>
+
+
+ <!-- head end -->
+</head>
+
+
+
+
+
+<body>
+
+<div class="wrap">
+
+  <div class="masthead">
+
+    <div>
+      <div class="eyebrow">Structure & Planning Tools For Any Writing Project </div>
+      <h1 class="title"><i>Paperback Writer</h1></i>
+    </div>
+
+    <div>
+<!------------------------------------------------
+  -- HTML buttons on top, next to "the outliner" 
+  ------------------------------------------------> 
+
+      <div class="file-buttons">
+
+        <button
+          type="button"
+          class="btn-primary"
+          id="saveProjectBtn">
+          Save Project
+        </button>
+
+        <button
+          type="button"
+          class="btn-secondary"
+          id="loadProjectBtn">
+          Load Project
+        </button>
+
+        <button
+          type="button"
+          class="btn-secondary"
+          id="saveHTMLBtn">
+          Save HTML
+        </button>
+
+        <input
+          type="file"
+          id="projectFileInput"
+          accept=".json,application/json"
+          style="display:none;">
+
+      </div>
+
+      <div class="save-state" id="saveState">
+        ready
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="meta-row">
+
+    <div class="field">
+
+      <label>Working title</label>
+
+      <input
+        class="book-title-input"
+        id="bookTitle"
+        placeholder="The name of your novel">
+
+    </div>
+
+    <div class="field">
+
+      <label>Genre</label>
+
+      <input
+        id="genre"
+        placeholder="e.g. literary thriller">
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="field"
+    style="margin-top:-20px; margin-bottom:34px;">
+
+    <label>Premise — one or two sentences</label>
+
+    <textarea
+      id="premise"
+      rows="2"
+      placeholder="A retired lighthouse keeper discovers the last ship she failed to warn is still trying to reach her."
+    ></textarea>
+
+  </div>
+
+
+  <!-------------------------------------------- 
+   --- STRUCTURE 
+   --------------------------------------------->
+
+  <section class="block">
+    <div class="block-head">
+      <span class="block-num">01</span>
+      <h2 class="block-title">Structure</h2>
+
+      <button
+        type="button"
+        onclick="window.open('Structure_Help_1.html', '_blank')">
+        Structure Help Guide
+      </button>
+
+    </div>
+
+    <div class="block-hint">
+      Pick 1 of the structures below for the story, Then pick one planning method. Selecting one loads its beats below — edit or clear any of them.
+    </div>
+
+    <div
+      class="structure-picker"
+      id="structurePicker">
+    </div>
+
+    <div
+      class="beats"
+      id="beatsList">
+    </div>
+
+  </section>
+
+
+  <!-------------------------------------------- 
+   --- PLANNING
+   --------------------------------------------->
+
+  <section class="block">
+    <div class="block-head">
+      <span class="block-num">15</span>
+      <h2 class="block-title">Planning</h2>
+
+      <button
+        type="button"
+        onclick="window.open('Structure_Help_1.html', '_blank')">
+        Planning Help Guide
+      </button>
+
+    </div>
+
+    <div class="block-hint">
+      Pick 1 planning method for the story. Selecting one loads its beats below — edit or clear any of them.
+    </div>
+
+    <div
+      class="planning-picker"
+      id="planningPicker">
+    </div>
+
+    <div
+      class="planbeats"
+      id="planbeatsList">
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+   <!-------------------------------------------- 
+   --- Characters  
+   --------------------------------------------->
+
+  <section class="block">
+    <div class="block-head">
+      <span class="block-num">02</span>
+      <h2 class="block-title">Characters</h2>
+    </div>
+
+    <div class="block-hint">
+      Every character worth a beat sheet is worth a want and a wound.
+    </div>
+
+    <div
+      class="card-grid"
+      id="charGrid">
+    </div>
+
+    <button
+      class="add-btn"
+      id="addChar">
+      + add character
+    </button>
+
+  </section>
+
+
+  <!--------------------------------------------- 
+   --- Chapters  
+   --------------------------------------------->
+
+  <section class="block">
+
+    <div class="block-head">
+
+      <span class="block-num">03</span>
+
+      <h2 class="block-title">Chapters</h2>
+
+    </div>
+
+    <div
+      class="stat-strip"
+      id="chapterStats">
+    </div>
+
+    <div
+      class="chapter-list"
+      id="chapterList">
+    </div>
+
+    <button
+      class="add-btn"
+      id="addChapter">
+      + add chapter
+    </button>
+
+  </section>
+
+
+  <!-- EXPORT -->
+
+  <section class="block">
+
+    <div class="block-head">
+
+      <span class="block-num">04</span>
+
+      <h2 class="block-title">Export</h2>
+
+    </div>
+
+    <div class="block-hint">
+      Download the whole outline as a Markdown file, or copy it to paste elsewhere.
+    </div>
+
+    <div class="export-row">
+
+      <button
+        class="btn-primary"
+        id="downloadBtn">
+        Download outline.md
+      </button>
+
+      <button
+        class="btn-secondary"
+        id="copyBtn">
+        Copy to clipboard
+      </button>
+
+      <button
+        class="btn-secondary"
+        id="resetBtn">
+        Clear everything
+      </button>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast">
+  Ready
+</div>
+
+
+
+
+<!--
+  When "Save HTML" is used, saveLocalHTML() inserts
+  another script immediately before </head>:
+
+  window.embeddedSavedState = {...};
+
+  The normal application file does not need this.
+-->
+
+</body>
+</html>

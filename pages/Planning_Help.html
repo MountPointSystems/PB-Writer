@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Structure Quick Reference Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        header {
+            border-bottom: 3px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 { margin: 0; color: #0056b3; font-size: 24px; }
+        h2 { color: #222; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 30px; }
+        .save-btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover { background-color: #004085; }
+        .group-box {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .group-title { font-weight: bold; color: #555; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+        .method-name { font-weight: bold; color: #0056b3; font-size: 18px; margin-top: 5px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        .notes-area {
+            width: 100%;
+            height: 120px;
+            margin-top: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Story Structure Options Reference</h1>
+    <button type="button" class="save-btn" onclick="saveLocalHTML()">Save Page Edits</button>
+</header>
+
+<p>This quick reference guide breaks down the five story architecture and plotting options available in your application template.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Structure</th>
+            <th>Best Used For</th>
+            <th>Format Style</th>
+            <th>Core Focus</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>1) Three-Act Structure</strong></td>
+            <td>Any genre, standard pacing.</td>
+            <td>Broad, 3 blocks.</td>
+            <td>Overall pacing and timeline rhythm.</td>
+        </tr>
+        <tr>
+            <td><strong>2) Hero’s Journey</strong></td>
+            <td>Fantasy, adventure, sci-fi.</td>
+            <td>Cyclical, 12 milestones.</td>
+            <td>Internal character transformation.</td>
+        </tr>
+        <tr>
+            <td><strong>3) Save the Cat</strong></td>
+            <td>Commercial fiction, thrillers, screenplays.</td>
+            <td>Ultra-specific, 15 beats.</td>
+            <td>Commercial plotting benchmarks.</td>
+		</tr>
+		<tr>
+            <td><strong>Dialectical Structure</strong></td>
+            <td>Philosophical texts.</td>
+            <td>Thesis-Antithesis-Synthesis.</td>
+            <td>Tension and resolution.</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Planning Process</th>
+            <th>Best Used For</th>
+            <th>Format Style</th>
+            <th>Core Focus</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Snowflake Method</strong></td>
+            <td>Writers wanting an organized assembly process.</td>
+            <td>Concentric expansion.</td>
+            <td>Workflow execution and organization.</td>
+        </tr>
+        <tr>
+            <td><strong>Freytag’s Special</strong></td>
+            <td>Tragedies, high drama, character downfalls.</td>
+            <td>Symmetrical, 5 acts.</td>
+            <td>Perfect rise and fall of dramatic tension.</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Hybrid</th>
+            <th>Best Used For</th>
+            <th>Format Style</th>
+            <th>Core Focus</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>7 Point Story Structure</strong></td>
+            <td>Structure & Blueprint</td>
+            <td>Outlining character arcs and pacing shifts quickly.</td>
+            <td>Balancing the beginning against the end via a proactive midpoint.</td>
+        </tr>
+        <tr>
+            <td><strong>Multi-Disciplinary Inquiry Structure</strong></td>
+            <td>Philosophical & Science texts</td>
+            <td>compate and contrast.</td>
+            <td>Hero's journey, where hero is the idea.</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<h2>Deep Dive Breakdowns</h2>
+
+<div class="group-box">
+    <div class="group-title">Group A: The Structural Frameworks (The "Shapes")</div>
+    
+    <div class="method-name">1) Three-Act Structure</div>
+    <p>The baseline foundation for Western storytelling. Splits your narrative into a clean Beginning, Middle, and End (Setup, Confrontation, and Resolution). It relies on fixed turning points (Plot Points) to maintain audience engagement across any genre.</p>
+
+    <div class="method-name">2) Save the Cat</div>
+    <p>A highly granular, modern evolution of the Three-Act Structure. It breaks your timeline down into 15 specific structural targets (like the Opening Image, Catalyst, B-Story, and All is Lost). Excellent for building modern, fast-paced commercial appeal.</p>
+
+    <div class="method-name">3) Freytag’s Pyramid ("Freytag's Special")</div>
+    <p>A classic 5-act dramatic layout built like a literal pyramid. It tracks narrative tension perfectly symmetrically, placing the primary Climax at the absolute dead center of the story, leading into Falling Action and a catastrophic resolution. Ideal for heavy dramatic plays and structural tragedies.</p>
+</div>
+
+<div class="group-box">
+    <div class="group-title">Group B: The Archetypal Journey (The "Transformation")</div>
+    <div class="method-name">4) Hero’s Journey</div>
+    <p>A 12-stage comparative mythology blueprint tracking a protagonist's internal, psychological death and rebirth. Rather than prioritizing rigid pacing timeframes, it focuses entirely on the narrative steps required to transform an ordinary person into a hero capable of conquering exceptional trials.</p>
+</div>
+
+<div class="group-box">
+    <div class="group-title">Group C: The Outlining Method (The "Process")</div>
+    <div class="method-name">5) Snowflake Method</div>
+    <p>An organizational design workflow, not a narrative architecture shape. It gives the writer a step-by-step framework to expand a single initial sentence organically into a deep scene list, character bible, and comprehensive outline. It can be actively used to build outlines matching any of the other four layout structures.</p>
+</div>
+
+<div class="group-box">
+ <div class="method-name">Which one to use?</div>
+ <p>
+	Because these 5 options represent completely different layers of the writing process (some are shapes, one is a workflow, and one is exclusive to tragedies), 
+	trying to force your story into all of them at once will create massive structural contradictions.
+</p>
+<p>
+	Instead, writers typically <b>pick one structural shape </b>that matches their genre, and then use the <b>Snowflake Method </b>as the workflow to build it.
+</p>
+
+Here is how you should actually approach choosing and mixing them for your project:
+
+<p class="method-name">1. The Contradictions (Why you can't use all 5)</p>
+<b></b><p><b>Freytag's Special vs. Three-Act:</b> Freytag’s Pyramid requires the absolute highest point of tension (the Climax) to happen exactly in the middle of the story, 
+followed by a long downward spiral. The Three-Act Structure and Save the Cat demand the Climax happen at the very end (around the 85-90% mark). You cannot do both.
+</p>
+<b>Hero's Journey vs. Save the Cat: </b>While they share similar beats, the Hero's Journey requires a mythic, cyclical structure where the character physically or metaphorically enters a 
+"supernatural world." If you are writing a gritty, grounded courtroom thriller, the Hero's Journey framework will feel incredibly awkward, whereas Save the Cat will fit perfectly.
+
+<p class="method-name">2. The Golden Combination (How to actually pair them)</p>
+
+Instead of all 5, successful writers choose one option from Column A and pair it with Column B:<br>
+<b>Step 1: Pick your Plot Workflow (The "Process")</b><br>
+	You choose 4) Snowflake Method. This means you commit to starting with a one-sentence summary, then expanding it to a paragraph, then a page.<br>
+<b>Step 2: Pick your Narrative Shape (The "Pacing Layout")</b><br>
+	As you expand your Snowflake outline, you choose one shape to guide your timeline:
+<ul>
+<li>Choose Three-Act for a standard, flexible layout (good for any genre).</li>
+<li>Choose Hero's Journey if you are writing fantasy, sci-fi, or a massive adventure.</li>
+<li>Choose Save the Cat if you want a fast-paced, highly commercial movie or thriller pacing.</li>
+<li>Choose Freytag’s Special only if you are writing a classical tragedy where the main character falls from grace.</li>
+</ul>
+
+Summary of Best PracticesMost writers will only ever map a project to two 
+items from your list at the same time: The Snowflake Method (to manage the paperwork) + One specific plot structure (to manage the timing).
+<p></p>
+</div>
+
+
+
+
+
+<h2>Personal Workflow Notes</h2>
+<p>Use the workspace below to jot down notes about your project. Click the "Save Page Edits" button above to preserve your thoughts permanently inside this file.</p>
+<textarea id="myNotes" class="notes-area" placeholder="Type your project-specific notes or layout preferences here...">note go here
+and here</textarea>
+
+<script>
+function saveLocalHTML() {
+const textarea = document.getElementById('myNotes');
+    if (textarea) {
+        // Set both properties to force the browser to export the text
+        textarea.textContent = textarea.value;
+        textarea.innerHTML = textarea.value;
+    }
+
+    // Grab the current state of the document
+    const fullHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+    // Generate download link
+    const blob = new Blob([fullHTML], { type: "text/html;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Structure_help_1.html"; 
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+}
+</script>
+
+
+</body></html>

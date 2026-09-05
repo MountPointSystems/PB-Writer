@@ -1,0 +1,81 @@
+{
+  "bookTitle": "Nothing Never Existed",
+  "genre": "Speculative Science",
+  "premise": "An investigation into the time before time. The time before time began. Before the big bang. ",
+  "structureKey": "three-act",
+  "beats": [
+    {
+      "name": "Setup",
+      "text": "struc 1 fubar"
+    },
+    {
+      "name": "Inciting Incident",
+      "text": "struc 2 snafu"
+    },
+    {
+      "name": "Plot Point 1 — into Act 2",
+      "text": "struc 3"
+    },
+    {
+      "name": "Rising Action / midpoint shift",
+      "text": "struc 4"
+    },
+    {
+      "name": "Plot Point 2 — into Act 3",
+      "text": "struc 5"
+    },
+    {
+      "name": "Climax",
+      "text": "struc climax"
+    },
+    {
+      "name": "Resolution",
+      "text": "struc resolution"
+    }
+  ],
+  "planningKey": "snowflake",
+  "planbeats": [
+    {
+      "name": "Sentence 1 — the whole story",
+      "text": "plan sent 1"
+    },
+    {
+      "name": "Sentence 2 — disaster 1 / Act 2 turn",
+      "text": "plan sent 2"
+    },
+    {
+      "name": "Sentence 3 — disaster 2 / midpoint",
+      "text": "plan sent 3"
+    },
+    {
+      "name": "Sentence 4 — disaster 3 / low point",
+      "text": "plan sent 4"
+    },
+    {
+      "name": "Sentence 5 — the ending",
+      "text": "plan send 5"
+    }
+  ],
+  "characters": [
+    {
+      "name": "Billy",
+      "role": "Protagonist",
+      "want": "",
+      "wound": ""
+    },
+    {
+      "name": "Bob",
+      "role": "",
+      "want": "",
+      "wound": ""
+    }
+  ],
+  "chapters": [
+    {
+      "title": "",
+      "pov": "",
+      "words": "",
+      "summary": ""
+    }
+  ]
+}
