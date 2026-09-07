@@ -1,0 +1,1 @@
+This is tool for any writing project, large or small. It automates the use of standard structure methods and processes to help get you started on that novel you've been thinking about. Or a paper that due tomorrow. 
