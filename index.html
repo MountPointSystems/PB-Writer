@@ -9,10 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
 
 
-<!-- Link your external style - CSS file here -->
+<!-- Link to the external style - CSS file here -->
 <link rel="stylesheet" href="styles/style.css">
 
-<!-- Link your external JS file here -->
+<!-- Link to the external JS file here -->
 <script src="scripts/Paperback-Writer.js" defer></script>
 
 
@@ -36,7 +36,7 @@
 
     <div>
 <!------------------------------------------------
-  -- HTML buttons on top, next to "the outliner" 
+  -- HTML buttons on top, next to "Paperback Writer" title
   ------------------------------------------------> 
 
       <div class="file-buttons">
@@ -78,45 +78,39 @@
 
   </div>
 
-
+<!------------------------------------------------
+  -- WORKING TITLE and GENRE  
+  ------------------------------------------------> 
   <div class="meta-row">
-
     <div class="field">
-
       <label>Working title</label>
-
       <input
         class="book-title-input"
         id="bookTitle"
-        placeholder="The name of your novel">
-
+        placeholder="The name of your novel or writing project">
     </div>
 
     <div class="field">
-
       <label>Genre</label>
-
       <input
         id="genre"
-        placeholder="e.g. literary thriller">
-
+        placeholder="e.g. literary thriller, science fiction">
     </div>
-
   </div>
 
-
+<!------------------------------------------------
+  -- PREMISE 
+  ------------------------------------------------> 
   <div
     class="field"
     style="margin-top:-20px; margin-bottom:34px;">
 
     <label>Premise — one or two sentences</label>
-
     <textarea
       id="premise"
       rows="2"
       placeholder="A retired lighthouse keeper discovers the last ship she failed to warn is still trying to reach her."
     ></textarea>
-
   </div>
 
 
@@ -127,18 +121,20 @@
   <section class="block">
     <div class="block-head">
       <span class="block-num">01</span>
-      <h2 class="block-title">Structure</h2>
 
+      <span class="help-text" data-help="Most will choose the structure first. Think of structure as the shape of the story, and planning/process as how to implement that shape.
+          Example: I want build a 2 story, 4 bedroom house (structure). Here are the directions on how to build it.(planning/process)">
+        <h2 class="block-title">Structures</h2>
+      </span>
       <button
         type="button"
         onclick="window.open('Structure_Help_1.html', '_blank')">
         Structure Help Guide
       </button>
-
     </div>
 
     <div class="block-hint">
-      Pick 1 of the structures below for the story, Then pick one planning method. Selecting one loads its beats below — edit or clear any of them.
+      Pick one of the structures below for the story, then pick one planning method. Selecting one loads its beats below — edit or clear any of them.
     </div>
 
     <div
@@ -151,6 +147,14 @@
       id="beatsList">
     </div>
 
+    
+    <!-- tamco
+    <div
+      class="custombeats"
+      id="custombeatsList">
+    </div> -->
+
+
   </section>
 
 
@@ -160,8 +164,8 @@
 
   <section class="block">
     <div class="block-head">
-      <span class="block-num">15</span>
-      <h2 class="block-title">Planning</h2>
+      <span class="block-num">02</span>
+      <h2 class="block-title">Planning/Process</h2>
 
       <button
         type="button"
@@ -199,7 +203,7 @@
 
   <section class="block">
     <div class="block-head">
-      <span class="block-num">02</span>
+      <span class="block-num">03</span>
       <h2 class="block-title">Characters</h2>
     </div>
 
@@ -229,7 +233,7 @@
 
     <div class="block-head">
 
-      <span class="block-num">03</span>
+      <span class="block-num">04</span>
 
       <h2 class="block-title">Chapters</h2>
 
@@ -260,7 +264,7 @@
 
     <div class="block-head">
 
-      <span class="block-num">04</span>
+      <span class="block-num">05</span>
 
       <h2 class="block-title">Export</h2>
 

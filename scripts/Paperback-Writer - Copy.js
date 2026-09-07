@@ -73,7 +73,7 @@ const STRUCTURES = {
    "custom": {
     label:"Custom",
 	  helpText:"Custom help here.",
-    beats:[
+    custombeats:[
       ["Introduction",""],
       ["custom 1: ", ""],
       ["custom 2: ", ""],
@@ -150,12 +150,10 @@ const CUSTOM_STRUCTURE = {
 };
 
 
-
-
-
 /* =========================================================
    DEFAULT STATE
    ========================================================= */
+
 function createDefaultState(){
 
   return {
@@ -164,27 +162,35 @@ function createDefaultState(){
     premise:"",
 
     structureKey:"three-act",
+    beats:
+      STRUCTURES["three-act"].beats.map(
+        b => ({
+          name:b[0],
+          text:b[1]
+        })
+      ),
 
-    // ⭐ Initialize ALL structures, not just three-act
-    structures: Object.fromEntries(
-      Object.keys(STRUCTURES).map(key => [
-        key,
-        {
-          beats: STRUCTURES[key].beats.map(b => ({
-            name: b[0],
-            text: b[1]
-          }))
-        }
-      ])
-    ),
+	  planningKey:"snowflake",		  
+	  planbeats:
+      PLANNING["snowflake"].planbeats.map(
+        j => ({
+          name:j[0],
+          text:j[1]
+        })
+      ),
 
-    planningKey:"snowflake",
-    planbeats: PLANNING["snowflake"].planbeats.map(j => ({
-      name:j[0],
-      text:j[1]
-    })),
+/*  custom --------------------------*/ 
+    customKey:"custom-structure",		  
+	  custombeats:
+      CUSTOM_STRUCTURE["custom-structure"].custombeats.map(
+        j => ({
+          name:j[0],
+          text:j[1]
+        })
+      ),
+  /* custom -------------------------- */
 
-    characters:[
+  characters:[
       {
         name:"",
         role:"Protagonist",
@@ -205,139 +211,74 @@ function createDefaultState(){
 }
 
 
-
-
-/*function createDefaultState(){
-
-  return {
-    bookTitle:"",
-    genre:"",
-    premise:"",
-
-    structureKey:"three-act",
-
-    // ⭐ beats now come from structures
-    structures: {
-      "three-act": {
-        beats: STRUCTURES["three-act"].beats.map(
-          b => ({
-            name:b[0],
-            text:b[1]
-          })
-        )
-      }
-    },
-
-    // ⭐ state.beats points to the active structure
-   /*
-    beats: STRUCTURES["three-act"].beats.map(
-      b => ({
-        name:b[0],
-        text:b[1]
-      })
-    ), */
-
-   /* planningKey:"snowflake",
-    planbeats:
-      PLANNING["snowflake"].planbeats.map(
-        j => ({
-          name:j[0],
-          text:j[1]
-        })
-      ),
-
-    characters:[
-      {
-        name:"",
-        role:"Protagonist",
-        want:"",
-        wound:""
-      }
-    ],
-
-    chapters:[
-      {
-        title:"",
-        pov:"",
-        words:"",
-        summary:""
-      }
-    ]
-  };
-} */
-
 let state = createDefaultState();
 let saveTimer = null;
 
-/* =======================================================================
-   normaliseState - appears to only be called when loading a project file. 
-   ======================================================================= */
+
+/* =========================================================
+   STATE VALIDATION -
+   seems to only be called when loading a project from file
+   ========================================================= */
 
 function normaliseState(data){
+
   const clean = createDefaultState();
+
   if(!data || typeof data !== "object"){
     return clean;
   }
+
+
   if(typeof data.bookTitle === "string"){
     clean.bookTitle = data.bookTitle;
   }
+
   if(typeof data.genre === "string"){
     clean.genre = data.genre;
   }
+
   if(typeof data.premise === "string"){
     clean.premise = data.premise;
   }
+
   if(
     typeof data.structureKey === "string" &&
     STRUCTURES[data.structureKey]
   ){
     clean.structureKey = data.structureKey;
   }
+
  if(
     typeof data.planningKey === "string" &&
     PLANNING[data.planningKey]
   ){
     clean.planningKey = data.planningKey;
   }
-
-  console.log("--------->>>normaliseState", data.customKey)
+  /* tamco */
+  if(
+    typeof data.customKey === "string" &&
+    CUSTOM_STRUCTURE[data.customKey]
+  ){
+    clean.customKey = data.customKey;
+  }  
+  console.log("---------normaliseState", data.customKey)
 
 /* --- 
    --- load STRUCTURE beats data from STRUCTURES array at top of this file 
    --- */
- /* if(Array.isArray(data.beats)){
+  if(Array.isArray(data.beats)){
     clean.beats = data.beats.map(beat => ({
       name:
         typeof beat.name === "string"
           ? beat.name
           : "",
+
       text:
         typeof beat.text === "string"
           ? beat.text
           : ""
     }));
-  }*/
-
-    /* ============================================================
-     LOAD STRUCTURES (the missing piece)
-     ============================================================ */
-  if (data.structures && typeof data.structures === "object") {
-    clean.structures = {};
-
-    for (const key of Object.keys(data.structures)) {
-      const beats = data.structures[key].beats || [];
-
-      clean.structures[key] = {
-        beats: beats.map(beat => ({
-          name: typeof beat.name === "string" ? beat.name : "",
-          text: typeof beat.text === "string" ? beat.text : ""
-        }))
-      };
-    }
   }
-
-
-
 
 /* --- 
    --- load PLANNING planbeats data from PLANNING array at top of this file 
@@ -348,10 +289,29 @@ function normaliseState(data){
         typeof planbeat.name === "string"
           ? planbeat.name
           : "",
+
       text:
         typeof planbeat.text === "string"
           ? planbeat.text
           : ""
+    }));
+  }
+
+/* --- 
+   ---    load CUSTOME_STRUCTURE custombeats data from CUSTOM_STRUCTURE array at the top of this file 
+   --- */
+  if(Array.isArray(data.custombeats)){
+    clean.custombeats = data.custombeats.map(custombeat => ({
+      name:
+        typeof custombeat.name === "string"
+          ? custombeat.name
+          : "",
+
+      text:
+        typeof custombeat.text === "string"
+          ? custombeat.text
+          : ""
+
     }));
   }
 
@@ -390,28 +350,26 @@ function normaliseState(data){
         typeof chapter.title === "string"
           ? chapter.title
           : "",
+
       pov:
         typeof chapter.pov === "string"
           ? chapter.pov
           : "",
+
       words:
         typeof chapter.words === "string"
           ? chapter.words
           : String(chapter.words || ""),
+
       summary:
         typeof chapter.summary === "string"
           ? chapter.summary
           : ""
+
     }));
+
   }
 
-    /* ============================================================
-     SYNC ACTIVE STRUCTURE BEATS
-     ============================================================ */
-    if (clean.structures[clean.structureKey]) 
-    {
-    clean.beats = clean.structures[clean.structureKey].beats;
-    }
 
   return clean;
 
@@ -445,7 +403,7 @@ function downloadBlob(blob, filename){
 
 function loadProjectFile(file){
 
-  if(!file ){
+  if(!file){
     return;
   }
   const reader = new FileReader();
@@ -463,6 +421,7 @@ function loadProjectFile(file){
       showToast("Project loaded");
     }
     catch(error){
+
       console.error(
         "Could not load project:",
         error
@@ -473,11 +432,13 @@ function loadProjectFile(file){
     }
   };
   reader.onerror = function(){
+
     alert(
       "The project file could not be read."
     );
   };
   reader.readAsText(file);
+
 }
 
 /* =========================================================
@@ -487,25 +448,9 @@ function loadProjectFile(file){
 function saveProject(){
 
   // Make sure the top-level fields are current.
-  /*state.bookTitle = document.getElementById("bookTitle").value;
+  state.bookTitle = document.getElementById("bookTitle").value;
   state.genre = document.getElementById("genre").value;
   state.premise = document.getElementById("premise").value;
-*/ 
-
-document.getElementById("bookTitle").addEventListener("input", e => {
-  state.bookTitle = e.target.value;
-  queueSave();
-});
-
-document.getElementById("genre").addEventListener("input", e => {
-  state.genre = e.target.value;
-  queueSave();
-});
-
-document.getElementById("premise").addEventListener("input", e => {
-  state.premise = e.target.value;
-  queueSave();
-});
 
   clearTimeout(saveTimer);
 
@@ -522,7 +467,7 @@ document.getElementById("premise").addEventListener("input", e => {
     filename = "novel-outline";
   }
 
-/* this little trick moves the "file blob" in memeory onto your computer */
+/* this little trick moves the "file" in memeory onto your computer */
   downloadBlob(
     blob,
     filename + ".json"
@@ -675,55 +620,10 @@ function queueSave(){
 
 }
 
+
 /* ==============================================================================================================
    STRUCTURE PICKER = create the structures buttons defined in the STRUCTURES array at the top of this file
    ============================================================================================================= */
-function renderStructurePicker(){
-  const wrap = document.getElementById("structurePicker");
-  wrap.innerHTML = "";
-    
-  Object.keys(STRUCTURES).forEach(key => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = STRUCTURES[key].label;
-
-    button.title = STRUCTURES[key].helpText || "Click to use this writing structure";
-
-    if (key === state.structureKey) {
-      button.classList.add("active");
-    }
-
-    button.onclick = () => {
-      // Only do work if they picked a different structure
-      if (state.structureKey !== key) {
-        state.structureKey = key;
-
-        // If this structure has never been used before, initialize it
-        if (!state.structures[key]) {
-          state.structures[key] = {
-            beats: STRUCTURES[key].beats.map(j => ({
-              name: j[0],
-              text: j[1]
-            }))
-          };
-        }
-
-        // Point beats at the chosen structure
-        state.beats = state.structures[key].beats;
-
-        render();
-        queueSave();
-      }
-    };
-
-    wrap.appendChild(button);
-  });
-}
-
-
-/* ==============================================================================================================
-   STRUCTURE PICKER = create the structures buttons defined in the STRUCTURES array at the top of this file
-   ============================================================================================================= 
 function renderStructurePicker(){
     const wrap = document.getElementById("structurePicker");
     wrap.innerHTML = "";
@@ -733,8 +633,8 @@ function renderStructurePicker(){
         button.type = "button";
         button.textContent = STRUCTURES[key].label;
         
-		    console.log("in 1 - renderStructurePicker - key:", key); 
-		    console.log("in 2 - renderStructurePicker - state.structureKey:", state.structureKey);
+		    console.log("in renderStructurePicker - key:", key); 
+		    console.log("in renderStructurePicker - state.structureKey:", state.structureKey);
 		
 		button.title = STRUCTURES[key].helpText || "Click to use this writing structure";
         if(key === state.structureKey){
@@ -742,22 +642,43 @@ function renderStructurePicker(){
         }
         button.onclick = () => {
             // ONLY reset data if they are choosing a DIFFERENT structure -- this needs work                         
-            if (state.structureKey !== key) 
-            {
+            if (state.structureKey !== key) {
                 state.structureKey = key;
-                      if (!state.structures[key]) 
-                      { 
-                         state.structures[key] = {beats: STRUCTURES[key].beats.map(j => ({name: j[0],text: j[1] }))};
-                      }
+                if (state.structureKey !== "custom") { 
+                      //state.beats = STRUCTURES[key].beats.map( x => ({ name:x[0], text:"" }) );
+
+                      // create different struture for each list of beats?
+                      if (!state.structures[key]) { 
+                        state.structures[key] = {beats: STRUCTURES[key].beats.map(j => ({name: j[0],text: j[1] }))
+                       // render();
+                       // queueSave();
+                     };
+                    }
+                } else {
+                     console.log(">>>>> Custom structure selected", key);
+                     state.custombeats = STRUCTURES[key].custombeats.map( x => ({ name:x[0], text:"" }) )
+                     render();
+                     queueSave();
+                     renderCustomBeats();
+                }
             state.beats = state.structures[key].beats;
             render();
-            queueSave();
-            console.log("in 3 - renderStructurePicker", state.structures[key].beats)         
+            queueSave();         
             }
+/*
+            if (state.structureKey !== key) {
+                state.structureKey = key;
+                state.beats = STRUCTURES[key].beats.map( x => ({ name:x[0], text:"" }) );
+                render();
+                queueSave();
+            }
+            }
+*/
         };
         wrap.appendChild(button);
     });
-}*/
+}
+
 
 /* ==============================================================================================================
    PLANNING PICKER - create the planning structure buttons defined in the PLANNING array at the top of this file
@@ -1569,13 +1490,19 @@ document.getElementById(
 ).onclick = () => {
 
   state.characters.push({
+
     name:"",
     role:"",
     want:"",
     wound:""
+
   });
+
+
   render();
+
   queueSave();
+
 };
 
 
@@ -1596,8 +1523,11 @@ document.getElementById(
 
   });
 
+
   render();
+
   queueSave();
+
 
   document
     .getElementById("chapterList")
@@ -1620,6 +1550,8 @@ document.getElementById(
 
   const md =
     buildMarkdown();
+
+
   const blob =
     new Blob(
       [md],
@@ -1627,18 +1559,29 @@ document.getElementById(
         type:"text/markdown;charset=utf-8"
       }
     );
+
+
   let filename =
     (state.bookTitle || "outline")
       .replace(/[^a-z0-9\-_ ]/gi,"")
       .trim();
+
+
   if(!filename){
     filename = "outline";
   }
 
-  downloadBlob(blob, filename + ".md");
+
+  downloadBlob(
+    blob,
+    filename + ".md"
+  );
+
+
   showToast(
     "Markdown downloaded"
   );
+
 };
 
 
@@ -1649,19 +1592,29 @@ document.getElementById(
 document.getElementById(
   "copyBtn"
 ).onclick = async () => {
+
   const md =
     buildMarkdown();
+
+
   try{
+
     await navigator.clipboard.writeText(md);
+
     showToast(
       "Copied to clipboard"
     );
+
   }
+
   catch(e){
+
     showToast(
       "Copy failed — select and copy manually"
     );
+
   }
+
 };
 
 
@@ -1723,7 +1676,6 @@ function initialise(){
     setSaveStatus("saved project loaded", true);
   }
   state.structures = state.structures || {};
-  state.beats = state.structures[state.structureKey].beats;
   render();
 }
 
