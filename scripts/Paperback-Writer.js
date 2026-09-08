@@ -688,31 +688,48 @@ function renderStructurePicker(){
     button.textContent = STRUCTURES[key].label;
 
     button.title = STRUCTURES[key].helpText || "Click to use this writing structure";
-
-    if (key === state.structureKey) {
-      button.classList.add("active");
-    }
-
+    
+    // this line makes the selected button active (currently black)
+    if (key === state.structureKey) {button.classList.add("active");}
+    
+    console.log("renderStructurePicker 1: key", key )
+    console.log("renderStructurePicker 2: state.structreKey",  state.structureKey)
+    /*console.log("renderStructurePicker 3: button.textContext",  button.textContent)
+    console.log("renderStructurePicker 4: button.title",  button.title) */
+    
     button.onclick = () => {
       // Only do work if they picked a different structure
+      // structure.key is the currently selected button. key is the list of options from structre defined as const 
       if (state.structureKey !== key) {
         state.structureKey = key;
 
         // If this structure has never been used before, initialize it
         if (!state.structures[key]) {
+          console.log("renderStructurePicker 3:" )
+         
           state.structures[key] = {
             beats: STRUCTURES[key].beats.map(j => ({
               name: j[0],
               text: j[1]
             }))
           };
+
         }
 
         // Point beats at the chosen structure
         state.beats = state.structures[key].beats;
+        if (state.structureKey !== "custom") { 
+            render();
+            queueSave();
+          } else 
+          {
+            console.log("renderStructurePicker 5: else custom" )
+            render();
+            queueSave();
+            renderCustomBeats();
+          } 
 
-        render();
-        queueSave();
+
       }
     };
 
@@ -720,44 +737,6 @@ function renderStructurePicker(){
   });
 }
 
-
-/* ==============================================================================================================
-   STRUCTURE PICKER = create the structures buttons defined in the STRUCTURES array at the top of this file
-   ============================================================================================================= 
-function renderStructurePicker(){
-    const wrap = document.getElementById("structurePicker");
-    wrap.innerHTML = "";
-	
-    Object.keys(STRUCTURES).forEach(key => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.textContent = STRUCTURES[key].label;
-        
-		    console.log("in 1 - renderStructurePicker - key:", key); 
-		    console.log("in 2 - renderStructurePicker - state.structureKey:", state.structureKey);
-		
-		button.title = STRUCTURES[key].helpText || "Click to use this writing structure";
-        if(key === state.structureKey){
-            button.classList.add("active");
-        }
-        button.onclick = () => {
-            // ONLY reset data if they are choosing a DIFFERENT structure -- this needs work                         
-            if (state.structureKey !== key) 
-            {
-                state.structureKey = key;
-                      if (!state.structures[key]) 
-                      { 
-                         state.structures[key] = {beats: STRUCTURES[key].beats.map(j => ({name: j[0],text: j[1] }))};
-                      }
-            state.beats = state.structures[key].beats;
-            render();
-            queueSave();
-            console.log("in 3 - renderStructurePicker", state.structures[key].beats)         
-            }
-        };
-        wrap.appendChild(button);
-    });
-}*/
 
 /* ==============================================================================================================
    PLANNING PICKER - create the planning structure buttons defined in the PLANNING array at the top of this file
@@ -794,19 +773,24 @@ function renderPlanningPicker(){
 
 /* =========================================================
    RENDER BEATS for STRUCTURES - this actually creates the divs 
-    in the html, including the lavel and text input area.  
+    in the html, including the label and text input area.  
    ========================================================= */
 function renderBeats(){
 
   const wrap = document.getElementById("beatsList");
   wrap.innerHTML = "";
   state.beats.forEach(
+      
     (beat, i) => {
       const row = document.createElement("div");
       row.className = "beat";
       const name = document.createElement("div");
       name.className = "beat-name";
       name.textContent = beat.name;
+      // tamco 
+      /*console.log("renderBeats 1: name.textContent", name.textContent);
+      console.log("renderBeats 2: state.beats",state.structures[1].beats);*/
+
       const textarea = document.createElement("textarea");
       textarea.placeholder = "What happens here…";
       textarea.value = beat.text;
@@ -833,29 +817,28 @@ function renderBeats(){
 function renderCustomBeats(){
   const wrap = document.getElementById("beatsList"); /* yes, use beatslist to map to same area in html?? */
   wrap.innerHTML = "";
-  state.custombeats.forEach(
-    (custombeat, i) => {
+  state.beats.forEach(
+    (beat, i) => {
       const row = document.createElement("div");
       row.className = "beat";
       //
-      //editable label
-      //
+      // editable label
       const nameInput = document.createElement("input");
       nameInput.className = "beat-name";
-      nameInput.value = custombeat.name;
+      nameInput.value = beat.name;
       nameInput.addEventListener("input", e => {
-      state.custombeats[i].name = e.target.value;
+      state.beats[i].name = e.target.value;
       queueSave();
     });
      
       // editable text area
       const textarea = document.createElement("textarea");
-      textarea.placeholder = "What happens here…";
-      textarea.value = custombeat.text;
+      textarea.placeholder = "What happens way over here…";
+      textarea.value = beat.text;
       textarea.addEventListener(
         "input",
         e => {
-          state.custombeats[i].text =
+          state.beats[i].text =
             e.target.value;
           queueSave();
         }
