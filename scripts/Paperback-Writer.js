@@ -16,7 +16,6 @@ const STRUCTURES = {
       ["Resolution",""]
     ]
   },
-
   "heros-journey": {
     label:"Hero's Journey",
 	  helpText:"A 12-stage mythological cycle tracking a hero's departure and transformation.", 
@@ -35,7 +34,6 @@ const STRUCTURES = {
       ["Return with the Elixir",""]
     ]
   },
-
   "save-the-cat": {
     label:"Save the Cat",
 	  helpText:"needs update.",
@@ -57,7 +55,6 @@ const STRUCTURES = {
       ["Final Image",""]
     ]
   },
-  
     "dialectical": {
     label:"Dialectical",
 	  helpText:"Often combined with multidisciplinary inquiry (the process) & Dialectical Structure.",
@@ -69,7 +66,6 @@ const STRUCTURES = {
       ["Conclusion",""]
     ]
   },
-
    "custom": {
     label:"Custom",
 	  helpText:"Custom help here.",
@@ -116,39 +112,19 @@ const PLANNING = {
     ]
   },
 
-  "multidiscplinary": {
-    label:"Multidiscplinary Inquiry",
+  "multidisciplinary": {
+    label:"Multidisciplinary Inquiry",
 	  helpText:"Integrates strategies from multiple writing frameworks, genres, or fields (e.g., combining thematic mapping, character psychology, and classic pacing charts).",
     planbeats:[
       ["1. Define the core problem",""],
-      ["2. Map and select revevant disciplines",""],
+      ["2. Map and select relevant disciplines",""],
       ["3. Gather data separately",""],
       ["4. Identify intersections and conficts",""],
       ["5. Synthesize the findings",""],
-	  ["6. Synthesize the findings",""]
+	    ["6. Reflect, evaluate, and share",""]
     ]
   }
 };
-
-
-/* ===========================================================================
-   create the array called CUSTOM_STRUCTURES to hold custome stucture options 
-   not sure if this is even used........ 
-   =========================================================================== */
-const CUSTOM_STRUCTURE = {
-    "custom-structure": {
-    label:"Custom",
-	  helpText:"Define your own structure with custom beats.",
-    custombeats:[
-      ["Introduction",""],
-      ["Beatcus 1", ""],
-      ["Beatcus 2", ""],
-      ["Beatcus 3", ""],
-      ["Beatcus 4", ""]
-    ]
-  },
-};
-
 
 
 
@@ -205,67 +181,6 @@ function createDefaultState(){
 }
 
 
-
-
-/*function createDefaultState(){
-
-  return {
-    bookTitle:"",
-    genre:"",
-    premise:"",
-
-    structureKey:"three-act",
-
-    // ⭐ beats now come from structures
-    structures: {
-      "three-act": {
-        beats: STRUCTURES["three-act"].beats.map(
-          b => ({
-            name:b[0],
-            text:b[1]
-          })
-        )
-      }
-    },
-
-    // ⭐ state.beats points to the active structure
-   /*
-    beats: STRUCTURES["three-act"].beats.map(
-      b => ({
-        name:b[0],
-        text:b[1]
-      })
-    ), */
-
-   /* planningKey:"snowflake",
-    planbeats:
-      PLANNING["snowflake"].planbeats.map(
-        j => ({
-          name:j[0],
-          text:j[1]
-        })
-      ),
-
-    characters:[
-      {
-        name:"",
-        role:"Protagonist",
-        want:"",
-        wound:""
-      }
-    ],
-
-    chapters:[
-      {
-        title:"",
-        pov:"",
-        words:"",
-        summary:""
-      }
-    ]
-  };
-} */
-
 let state = createDefaultState();
 let saveTimer = null;
 
@@ -299,8 +214,6 @@ function normaliseState(data){
   ){
     clean.planningKey = data.planningKey;
   }
-
-  console.log("--------->>>normaliseState", data.customKey)
 
 /* --- 
    --- load STRUCTURE beats data from STRUCTURES array at top of this file 
@@ -492,6 +405,7 @@ function saveProject(){
   state.premise = document.getElementById("premise").value;
 */ 
 
+/* tamco chatDR 1 -- commented out and things seem to work...  
 document.getElementById("bookTitle").addEventListener("input", e => {
   state.bookTitle = e.target.value;
   queueSave();
@@ -506,7 +420,7 @@ document.getElementById("premise").addEventListener("input", e => {
   state.premise = e.target.value;
   queueSave();
 });
-
+*/
   clearTimeout(saveTimer);
 
   const json = JSON.stringify( state, null, 2);
@@ -779,11 +693,30 @@ function renderBeats(){
 
   const wrap = document.getElementById("beatsList");
   wrap.innerHTML = "";
-  state.beats.forEach(
-      
-    (beat, i) => {
+  state.beats.forEach((beat, i) => {
       const row = document.createElement("div");
       row.className = "beat";
+      /* 
+       * delete DR start  
+      */ 
+      const remove = document.createElement("button");
+      remove.className = "card-remove";
+      remove.type = "button";
+      remove.title = "remove beat";
+      remove.textContent = "✕";
+
+      remove.onclick = () => {
+        state.structures[state.structureKey].beats.splice(i, 1);
+        state.beats = state.structures[state.structureKey].beats;
+        render();
+        queueSave();
+      };
+
+      row.appendChild(remove);
+      console.log("Beat remove button created:", remove);
+      /* delete DR end   */
+      
+      
       const name = document.createElement("div");
       name.className = "beat-name";
       name.textContent = beat.name;
@@ -813,6 +746,7 @@ function renderBeats(){
 /* =========================================================
    RENDER custombeats for CUSTOM_STRUCTURE - 
    this actually creates the divs in the html, including the label and text input area.  
+   notice this makes the label editable for CUSTOM structure only 
    ========================================================= */
 function renderCustomBeats(){
   const wrap = document.getElementById("beatsList"); /* yes, use beatslist to map to same area in html?? */
@@ -821,6 +755,23 @@ function renderCustomBeats(){
     (beat, i) => {
       const row = document.createElement("div");
       row.className = "beat";
+      // edit dr start 
+      const remove = document.createElement("button");
+      remove.className = "card-remove";
+      remove.type = "button";
+      remove.title = "remove plan beat";
+      remove.textContent = "✕";
+      remove.onclick = () => {
+          //state.structures[state.structureKey].beats.splice(i, 1);
+          //state.beats = state.structures[state.structureKey].beats;
+          state.planbeats.splice(i, 1);
+      render();
+      queueSave();
+      };
+
+      row.appendChild(remove);
+      // edit dr end 
+
       //
       // editable label
       const nameInput = document.createElement("input");
@@ -830,7 +781,7 @@ function renderCustomBeats(){
       state.beats[i].name = e.target.value;
       queueSave();
     });
-     
+      //
       // editable text area
       const textarea = document.createElement("textarea");
       textarea.placeholder = "What happens way over here…";
@@ -856,7 +807,61 @@ function renderCustomBeats(){
    ========================================================= */
 
 function renderPlanBeats(){
+const wrap = document.getElementById("planbeatsList");
+  wrap.innerHTML = "";
 
+  state.planbeats.forEach(
+    (planbeat, i) => {
+
+      const row = document.createElement("div");
+      row.className = "beat";
+
+      const remove = document.createElement("button");
+      remove.className = "card-remove";
+      remove.type = "button";
+      remove.title = "remove planning beat";
+      remove.textContent = "✕";
+
+      remove.onclick = () => {
+
+        state.planbeats.splice(i, 1);
+
+        render();
+        queueSave();
+
+      };
+
+      row.appendChild(remove);
+
+      const name = document.createElement("div");
+      name.className = "planbeat-name";
+      name.textContent = planbeat.name;
+
+      const textarea = document.createElement("textarea");
+      textarea.placeholder = "What happens here…";
+      textarea.value = planbeat.text;
+
+      textarea.addEventListener(
+        "input",
+        e => {
+          state.planbeats[i].text =
+            e.target.value;
+
+          queueSave();
+        }
+      );
+
+      row.appendChild(name);
+      row.appendChild(textarea);
+
+      wrap.appendChild(row);
+
+    }
+  );
+}
+
+
+  /* delete dr 
   const wrap = document.getElementById("planbeatsList");
   wrap.innerHTML = "";
   state.planbeats.forEach(
@@ -880,10 +885,9 @@ function renderPlanBeats(){
       row.appendChild(name);
       row.appendChild(textarea);
       wrap.appendChild(row);
-
     }
-  );
-}
+  ); 
+ }*/
 
 
 
@@ -904,19 +908,13 @@ function renderCharacters(){
 
   state.characters.forEach(
     (c, i) => {
-
       const card =
         document.createElement("div");
+      card.className = "char-card";
 
+      const remove = document.createElement("button");
 
-      card.className =
-        "char-card";
-
-      const remove =
-        document.createElement("button");
-
-      remove.className =
-        "card-remove";
+      remove.className = "card-remove";
 
       remove.type = "button";
       remove.title = "remove";
@@ -1013,49 +1011,22 @@ function makeCharacterField(
   placeholder
 ){
 
-  const wrapper =
-    document.createElement("div");
-
-
-  wrapper.className =
-    "char-row";
-
-
-  const label =
-    document.createElement("label");
-
-
-  label.textContent =
-    labelText;
-
-
-  const input =
-    document.createElement("input");
-
-
-  input.className =
-    className;
-
-
-  input.placeholder =
-    placeholder;
-
-
-  input.value =
-    value || "";
-
+  const wrapper = document.createElement("div");
+  wrapper.className = "char-row";
+  const label = document.createElement("label");
+  label.textContent = labelText;
+  const input = document.createElement("input");
+  input.className = className;
+  input.placeholder = placeholder;
+  input.value = value || "";
 
   input.addEventListener(
     "input",
     e => onInput(e.target.value)
   );
 
-
   wrapper.appendChild(label);
-
   wrapper.appendChild(input);
-
-
   return wrapper;
 
 }
@@ -1072,57 +1043,25 @@ function renderChapters(){
       "chapterList"
     );
 
-
   wrap.innerHTML = "";
-
-
   state.chapters.forEach(
     (ch, i) => {
-
       const card =
         document.createElement("div");
 
 
-      card.className =
-        "chapter-card";
-
-
-      const num =
-        document.createElement("div");
-
-
-      num.className =
-        "chapter-num";
-
-
-      num.textContent =
-        String(i + 1).padStart(2,"0");
-
-
+      card.className = "chapter-card";
+      const num = document.createElement("div");
+      num.className = "chapter-num";
+      num.textContent = String(i + 1).padStart(2,"0");
       card.appendChild(num);
-
-
-      const content =
-        document.createElement("div");
-
-
-      const remove =
-        document.createElement("button");
-
-
-      remove.className =
-        "card-remove";
-
-
+      const content = document.createElement("div");
+      const remove = document.createElement("button");
+      remove.className = "card-remove";
       remove.type = "button";
-
       remove.title = "remove";
-
       remove.textContent = "✕";
-
-
       remove.onclick = () => {
-
         state.chapters.splice(i,1);
 
         render();
@@ -1246,14 +1185,8 @@ function renderChapters(){
           queueSave();
         }
       );
-
-
       content.appendChild(summary);
-
-
       card.appendChild(content);
-
-
       wrap.appendChild(card);
 
     }
@@ -1304,11 +1237,7 @@ function renderStats(){
 
 function render(){
 
-  document.getElementById(
-    "bookTitle"
-  ).value =
-    state.bookTitle;
-
+  document.getElementById("bookTitle").value = state.bookTitle;
 
   document.getElementById(
     "genre"
@@ -1344,21 +1273,12 @@ function buildMarkdown(){
 
   let md =
     `# ${state.bookTitle || "Untitled Novel"}\n\n`;
-  if(state.genre){
-
-    md +=
-      `*${state.genre}*\n\n`;
-
-  }
+  if(state.genre){md += `*${state.genre}*\n\n`;}
   if(state.premise){
-
-    md +=
-      `${state.premise}\n\n`;
+    md +=`${state.premise}\n\n`;
   }
 
-  md +=
-    `---\n\n## Structure — ${STRUCTURES[state.structureKey].label}\n\n`;
-
+  md += `---\n\n## Structure — ${STRUCTURES[state.structureKey].label}\n\n`;
 
   state.beats.forEach(
     b => {
@@ -1366,14 +1286,10 @@ function buildMarkdown(){
       md +=
         `**${b.name}**  \n` +
         `${b.text || "_(not yet written)_"}\n\n`;
-
     }
   );
 
-
-  md +=
-    `---\n\n## Characters\n\n`;
-
+  md += `---\n\n## Characters\n\n`;
 
   state.characters.forEach(
     c => {
@@ -1381,74 +1297,44 @@ function buildMarkdown(){
       md +=
         `### ${c.name || "Unnamed"} ` +
         `${c.role ? "— " + c.role : ""}\n`;
-
-
       if(c.want){
-
-        md +=
-          `- Wants: ${c.want}\n`;
-
+        md += `- Wants: ${c.want}\n`;
       }
-
 
       if(c.wound){
-
-        md +=
-          `- Wound / need: ${c.wound}\n`;
-
+        md += `- Wound / need: ${c.wound}\n`;
       }
-
-
       md += "\n";
-
     }
   );
 
 
-  md +=
-    `---\n\n## Chapters\n\n`;
-
+  md += `---\n\n## Chapters\n\n`;
 
   state.chapters.forEach(
     (ch, i) => {
-
       md +=
         `### Chapter ${i + 1}` +
         `${ch.title ? ": " + ch.title : ""}\n`;
 
-
       if(ch.pov){
-
         md +=
           `- POV: ${ch.pov}\n`;
-
       }
-
-
       if(ch.words){
-
         md +=
           `- Target words: ${ch.words}\n`;
-
       }
-
-
       if(ch.summary){
-
         md +=
           `\n${ch.summary}\n`;
-
       }
-
-
       md += "\n";
 
     }
   );
 
-
   return md;
-
 }
 
 
@@ -1468,7 +1354,6 @@ document.getElementById(
      .getElementById("projectFileInput")
      .click();
 };
-
 
 document.getElementById(
   "projectFileInput"
@@ -1498,47 +1383,22 @@ document.getElementById(
    TOP-LEVEL INPUTS
    ========================================================= */
 
-document.getElementById(
-  "bookTitle"
-).addEventListener(
-  "input",
-  e => {
-
-    state.bookTitle =
-      e.target.value;
-
+document.getElementById("bookTitle").addEventListener("input", e => {
+    state.bookTitle = e.target.value;
     queueSave();
+  }
+);
 
+document.getElementById("genre").addEventListener("input", e => {
+    state.genre = e.target.value;
+    queueSave();
   }
 );
 
 
-document.getElementById(
-  "genre"
-).addEventListener(
-  "input",
-  e => {
-
-    state.genre =
-      e.target.value;
-
+document.getElementById("premise").addEventListener("input", e => {
+    state.premise = e.target.value;
     queueSave();
-
-  }
-);
-
-
-document.getElementById(
-  "premise"
-).addEventListener(
-  "input",
-  e => {
-
-    state.premise =
-      e.target.value;
-
-    queueSave();
-
   }
 );
 
@@ -1550,7 +1410,6 @@ document.getElementById(
 document.getElementById(
   "addChar"
 ).onclick = () => {
-
   state.characters.push({
     name:"",
     role:"",
@@ -1562,21 +1421,76 @@ document.getElementById(
 };
 
 
+
+/* =========================================================
+   ADD "beat" to Custom options 
+   ========================================================= */
+
+   console.log(
+  "addStructureBeat:",
+  document.getElementById("addStructureBeat")
+);
+/*
+const addBeatButton = document.getElementById("addStructureBeat");
+
+console.log("ADD BEAT BUTTON:", addBeatButton);
+console.log("ADD CHAR BUTTON:", document.getElementById("addChar"));
+console.log("ADD CHAPTER BUTTON:", document.getElementById("addChapter"));
+*/
+
+
+document.getElementById("addStructureBeat").onclick = () => {
+
+  const key = state.structureKey;
+
+  if (!state.structures[key]) {
+    state.structures[key] = {
+      beats: []
+    };
+  }
+
+  state.structures[key].beats.push({
+    name: "New Beat",
+    text: ""
+  });
+
+  state.beats = state.structures[key].beats;
+
+  render();
+  queueSave();
+
+};
+/* =========================================================
+   ADD Planning beat 
+   ========================================================= */
+   document.getElementById(
+    "addPlanBeat"
+    ).onclick = () => {
+    state.planbeats.push({
+      name: "New Beat",
+      text: ""
+    });
+    render();
+    queueSave();
+};
+
+
+
+
+
+
 /* =========================================================
    ADD CHAPTER
    ========================================================= */
-
 document.getElementById(
   "addChapter"
 ).onclick = () => {
 
   state.chapters.push({
-
     title:"",
     pov:"",
     words:"",
     summary:""
-
   });
 
   render();
@@ -1596,7 +1510,6 @@ document.getElementById(
 /* =========================================================
    MARKDOWN DOWNLOAD
    ========================================================= */
-
 document.getElementById(
   "downloadBtn"
 ).onclick = () => {

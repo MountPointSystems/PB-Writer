@@ -284,6 +284,7 @@
   }
 
   .beat{
+    position: relative;
     display:grid;
     grid-template-columns:150px 1fr;
     gap:14px;
@@ -350,6 +351,7 @@
   }
 
   .planbeat{
+    position: relative;
     display:grid;
     grid-template-columns:150px 1fr;
     gap:14px;
